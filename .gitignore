@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/.vs
+/WechatMessageSample/WechatMessageSample/App_Data/SenparcTraceLog
+/WechatMessageSample/WechatMessageSample/App_Data/WeChat_OfficialAccount/
+/WechatMessageSample/WechatMessageSample/bin/Debug/netcoreapp3.0
+/WechatMessageSample/WechatMessageSample/obj
+/WechatMessageSample/.vs/WechatMessageSample
