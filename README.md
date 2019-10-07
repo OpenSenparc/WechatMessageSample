@@ -10,7 +10,7 @@
 
 ![](images/01.png)
 
-原始的 startup.cs 如下：
+原始的 [startup.cs](https://github.com/OpenSenparc/WechatMessageSample/blob/96f3e3781f8e77141f608bfca168ead383565229/WechatMessageSample/WechatMessageSample/startup.cs) 如下：
 
 ``` C#
 namespace WechatMessageSample
@@ -72,7 +72,7 @@ public class CustomMpMessageHandler : Senparc.Weixin.MP.MessageHandlers.MessageH
 }
 ```
 
-一般情况下，此文件是独立的 .cs 文件，当前实例为了方便展示，一起写在了 [startup.cs](https://github.com/OpenSenparc/WechatMessageSample/blob/8dda2b4dbc27b88cd378112f593b62d17ea04d74/WechatMessageSample/WechatMessageSample/Startup.cs#L88) 文件中。
+一般情况下，此文件是独立的 .cs 文件，当前实例为了方便展示，一起写在了 [startup.cs](/WechatMessageSample/WechatMessageSample/Startup.cs#L88) 文件中。
 
 以上是一个默认的空的 MessageHandler，还不能正常运行，我们为 DefaultResponseMessage 添加默认的返回消息：
 
@@ -142,11 +142,9 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
 
 #### Configure() 方法内追加：
 ``` C#
-app.UseSenparcGlobal(env, senparcSetting.Value, globalRegister => { /* 全局注册设置 */})
-   //使用 Senparc.Weixin SDK
+app.UseSenparcGlobal(env, senparcSetting.Value, globalRegister => { })
    .UseSenparcWeixin(senparcWeixinSetting.Value, weixinRegister =>
    {
-       //注册公众号（可注册多个）
        weixinRegister.RegisterMpAccount(senparcWeixinSetting.Value, "【盛派网络小助手】公众号");
    });
 ```
@@ -160,4 +158,34 @@ app.UseMessageHandlerForMp("/WeixinAsync", CustomMpMessageHandler.GenerateMessag
     o => o.AccountSettingFunc = c => senparcWeixinSetting.Value);
 ```
 
+### 第五步：配置 appsetting.json
+
+参考：[appsetting.json](/WechatMessageSample/WechatMessageSample/appsettings.json#L11)
+
+找到公众号的相关设置，修改 Token、AppId 等参数。
+
 ### 完成。
+
+## 使用
+
+使用 Ctrl + F5 打开当前项目，可以看到默认输出的 Hello World 消息，打开上述设置的 `/Weixin` 地址：
+
+![](images/03.png)
+
+此时我们已经可以开始将站点部署到外网，提供给公众进行服务，所有的去重、加解密、上下文等过程系统已经全部配备。
+
+## 测试
+
+Senparc.Weixin SDK 为了方便开发者测试公众号消息，已经提供了一套[模拟器](https://sdk.weixin.senparc.com/SimulateTool)，可以用于发送和接收公众号消息的测试。
+
+注意：如果测试本地 localhost 的项目，需要在本地运行模拟器，上述模拟器也已经包含在开源 Sample 中，可以下载后在本地运行并使用：
+
+![](images/04.png)
+
+同样也支持并发测试以及加密模式：
+
+![](images/05.png)
+
+如果同时发送两条 MsgId 相同的消息，会被自动去重过滤：
+
+![](images/06.png)
