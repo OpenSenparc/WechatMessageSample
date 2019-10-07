@@ -40,7 +40,7 @@ namespace WechatMessageSample
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMemoryCache();//使用本地缓存必须添加
+            services.AddMemoryCache();//使用本地缓存必须添加（按需）
 
             services.AddSenparcWeixinServices(Configuration);//Senparc.Weixin 注册
         }
@@ -92,7 +92,6 @@ namespace WechatMessageSample
         /// </summary>
         public static Func<Stream, PostModel, int, CustomMpMessageHandler> GenerateMessageHandler = (stream, postModel, maxRecordCount)
                         => new CustomMpMessageHandler(stream, postModel, maxRecordCount, false/* 是否只允许处理加密消息，以提高安全性 */);
-
 
         public CustomMpMessageHandler(Stream inputStream, PostModel postModel, int maxRecordCount = 0, bool onlyAllowEcryptMessage = false, DeveloperInfo developerInfo = null)
             : base(inputStream, postModel, maxRecordCount, onlyAllowEcryptMessage, developerInfo)
