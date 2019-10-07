@@ -6,11 +6,11 @@
 
 ## 开发步骤
 
-### 第一步：创建一个的 .NET Core 3.0 Web 项目(空)：
+### 第一步：创建一个 .NET Core 3.0 Web 项目（空）：
 
 ![](images/01.png)
 
-原始的 startup.cs：
+原始的 startup.cs 如下：
 
 ``` C#
 namespace WechatMessageSample
@@ -43,14 +43,13 @@ namespace WechatMessageSample
         }
     }
 }
-
 ```
 
 ### 第二步：使用 Nuget 添加 Senparc.Weixin SDK：
 
 ![](images/02.png)
 
-标注出来的 3 个包分别是：公众号、小程序和企业微信，本实例主要演示公众号，其他两个平台使用方法是一致的，可以举一反三，不再赘述。
+上图标注出来的 3 个包分别是：公众号、小程序和企业微信，本实例主要演示公众号，其他两个平台使用方法是一致的，可以举一反三，不再赘述。
 
 
 ### 第三步：创建自定义消息处理器（MessageHandler）：
