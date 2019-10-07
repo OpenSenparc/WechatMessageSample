@@ -108,11 +108,11 @@ public override async Task<IResponseMessageBase> OnTextRequestAsync(RequestMessa
 
 ``` C#
 public static Func<Stream, PostModel, int, CustomMpMessageHandler> GenerateMessageHandler = (stream, postModel, maxRecordCount)
-                => new CustomMpMessageHandler(stream, postModel, maxRecordCount, false/* 是否只允许处理加密消息，以提高安全性 */);
+                => new CustomMpMessageHandler(stream, postModel, maxRecordCount, false);
 
 ```
 
-上述 CustomMpMessageHandler 构造函数中的最后一个参数，提供了一种加强的安全策略，可以指定是否只允许处理加密消息，开启之后，试图使用明文进行消息推送（嗅探）的请求将被拒绝（前提是对方已经拿到了正确的 Token），并终止后续处理流程，确保程序安全。
+上述 CustomMpMessageHandler 构造函数中的最后一个 bool 参数（onlyAllowEcryptMessage），提供了一种加强的安全策略，可以指定是否只允许处理加密消息，开启之后，试图使用明文进行消息推送（嗅探）的请求将被拒绝（前提是对方已经拿到了正确的 Token），并终止后续处理流程，确保程序安全。
 
 ### 第四步：修改 startup.cs 进行全局注册
 
