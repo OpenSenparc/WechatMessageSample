@@ -4,6 +4,9 @@
 
 更多完整示例请看 [完整 Sample](https://github.com/JeffreySu/WeiXinMPSDK/blob/master/Samples/netcore3.0-mvc/Senparc.Weixin.Sample.NetCore3)
 
+开发环境：Visual Studio 2019 / Visual Studio Code
+.NET 版本：[.NET Core 3.0](https://docs.microsoft.com/zh-cn/aspnet/core/getting-started/?view=aspnetcore-3.0&tabs=windows&WT.mc_id=DT-MVP-5002965)
+
 ## 开发步骤
 
 ### 第一步：创建一个 .NET Core 3.0 Web 项目（空）：
