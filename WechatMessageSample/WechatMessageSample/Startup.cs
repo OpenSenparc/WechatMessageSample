@@ -49,9 +49,6 @@ namespace WechatMessageSample
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
                 IOptions<SenparcSetting> senparcSetting, IOptions<SenparcWeixinSetting> senparcWeixinSetting)
         {
-            //引入EnableRequestRewind中间件
-            app.UseEnableRequestRewind();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -67,53 +64,58 @@ namespace WechatMessageSample
                 });
             });
 
-            app.UseSenparcGlobal(env, senparcSetting.Value, globalRegister => { })
+            app.UseSenparcGlobal(env, senparcSetting.Value, globalRegister => { /* 全局注册设置 */})
                //使用 Senparc.Weixin SDK
                .UseSenparcWeixin(senparcWeixinSetting.Value, weixinRegister =>
                {
-                   #region 注册公众号或小程序（按需）
-
                    //注册公众号（可注册多个）
-                   weixinRegister
-                          .RegisterMpAccount(senparcWeixinSetting.Value, "【盛派网络小助手】公众号")
-                          //注册多个公众号或小程序（可注册多个）
-                          .RegisterWxOpenAccount(senparcWeixinSetting.Value, "【盛派网络小助手】小程序")
-                   #endregion
-
-                   #region 注册企业号（按需）
-
-                          //注册企业微信（可注册多个）
-                          .RegisterWorkAccount(senparcWeixinSetting.Value, "【盛派网络】企业微信");
-                   #endregion
+                   weixinRegister.RegisterMpAccount(senparcWeixinSetting.Value, "【盛派网络小助手】公众号");
                });
 
             //使用 公众号 MessageHandler 中间件
-            app.UseMessageHandlerForMp("/Weixin", CustomMessageHandler.GenerateMessageHandler,
+            app.UseMessageHandlerForMp("/Weixin", CustomMpMessageHandler.GenerateMessageHandler,
                 o => o.AccountSettingFunc = c => senparcWeixinSetting.Value);
+
+            //小程序、企业号使用相同方法注册，参考：
+            //https://github.com/JeffreySu/WeiXinMPSDK/blob/master/Samples/netcore3.0-mvc/Senparc.Weixin.Sample.NetCore3/Startup.cs
         }
     }
 
     /// <summary>
+    /// 自定义公众号消息处理
     /// 出于展示方便，写在同一个文件中，实际开发建议分离到独立文件
     /// </summary>
-    public class CustomMessageHandler : Senparc.Weixin.MP.MessageHandlers.MessageHandler<DefaultMpMessageContext>
+    public class CustomMpMessageHandler : Senparc.Weixin.MP.MessageHandlers.MessageHandler<DefaultMpMessageContext>
     {
         /// <summary>
         /// 为中间件提供生成当前类的委托
         /// </summary>
-        public static Func<Stream, PostModel, int, CustomMessageHandler> GenerateMessageHandler = (stream, postModel, maxRecordCount)
-                        => new CustomMessageHandler(stream, postModel, maxRecordCount, false/* 是否只允许处理加密消息，以提高安全性 */);
+        public static Func<Stream, PostModel, int, CustomMpMessageHandler> GenerateMessageHandler = (stream, postModel, maxRecordCount)
+                        => new CustomMpMessageHandler(stream, postModel, maxRecordCount, false/* 是否只允许处理加密消息，以提高安全性 */);
 
 
-        public CustomMessageHandler(Stream inputStream, PostModel postModel, int maxRecordCount = 0, bool onlyAllowEcryptMessage = false, DeveloperInfo developerInfo = null)
+        public CustomMpMessageHandler(Stream inputStream, PostModel postModel, int maxRecordCount = 0, bool onlyAllowEcryptMessage = false, DeveloperInfo developerInfo = null)
             : base(inputStream, postModel, maxRecordCount, onlyAllowEcryptMessage, developerInfo)
         {
         }
 
-        public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
+        public override async Task<IResponseMessageBase> OnTextRequestAsync(RequestMessageText requestMessage)
         {
             var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
-            responseMessage.Content = "这是一条默认消息";
+            responseMessage.Content = $"您发送了文字：{requestMessage.Content}";
+            return responseMessage;
+        }
+
+        public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
+        {
+            var responseMessage = base.CreateResponseMessage<ResponseMessageNews>();
+            responseMessage.Articles.Add(new Article()
+            {
+                Title = "欢迎使用 Senparc.Weixin SDK",
+                Description = "这是一条默认消息",
+                PicUrl = "https://sdk.weixin.senparc.com/images/v2/logo.png",
+                Url = "https://weixin.senparc.com"
+            });
             return responseMessage;
         }
     }
