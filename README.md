@@ -1,6 +1,6 @@
 # Senparc.Weixin SDK 简易版消息处理 Sample ：WechatMessageSample
 
-本实例展示了使用 [Senparc.Weixin SDK](https://github.com/JeffreySu/WeiXinMPSDK) 的初始化方式及 MessageHandler 消息中间件的用法（以公众号为例，WebSocket 示例请见[WebSocket 分支](https://github.com/OpenSenparc/WechatMessageSample/tree/WebSocket)），本示例可直接用于部署，并进行微信公众号消息对接。
+本实例展示了使用 [Senparc.Weixin SDK](https://github.com/JeffreySu/WeiXinMPSDK) 的初始化方式及 MessageHandler 消息中间件的用法（以公众号为例，WebSocket 示例请见 [WebSocket 分支](https://github.com/OpenSenparc/WechatMessageSample/tree/WebSocket)），本示例可直接用于部署，并进行微信公众号消息对接。
 
 更多完整示例请看 [完整 Sample](https://github.com/JeffreySu/WeiXinMPSDK/blob/master/Samples/netcore3.0-mvc/Senparc.Weixin.Sample.NetCore3)
 
