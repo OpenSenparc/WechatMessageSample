@@ -5,10 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Senparc.Weixin.MP" Version="16.9.102-preview7.7.9" />
-    <PackageReference Include="Senparc.Weixin.MP.MVC" Version="7.4.102-preview7.7.7" />
-    <PackageReference Include="Senparc.Weixin.Work" Version="3.7.102-preview7.7.9" />
-    <PackageReference Include="Senparc.Weixin.WxOpen" Version="3.7.102-preview7.7.9" />
+    <PackageReference Include="Senparc.WebSocket" Version="0.9.102" />
+    <PackageReference Include="Senparc.Weixin.WxOpen" Version="3.7.102" />
   </ItemGroup>
 
 </Project>
