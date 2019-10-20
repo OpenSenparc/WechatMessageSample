@@ -4,5 +4,5 @@
 
 在线 Demo：https://sdk.weixin.senparc.com/WebSocket
 
-更多完整示例请看 [完整 Sample](https://github.com/JeffreySu/WeiXinMPSDK/blob/master/Samples/netcore3.0-mvc/Senparc.Weixin.Sample.NetCore3)。
+更多 Senparc.Weixin SDK 完整示例请看 [完整 Sample](https://github.com/JeffreySu/WeiXinMPSDK/blob/master/Samples/netcore3.0-mvc/Senparc.Weixin.Sample.NetCore3)。
 
